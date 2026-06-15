@@ -1,6 +1,12 @@
 # Course Material and FAQ for my Complete JavaScript Course
 
-Test a change - this is Libby's fork.
+## Test a change - this is Libby's fork.
+
+And this is where I got to ages ago when I first got onto this course https://github.com/libbyschuknight/complete-js-course-files
+
+I went off to try and do Wes Bos's one but didn't stick to it and now coming back to this as Wes Bos's one is very out of date.
+
+---
 
 This branch of the repo contains starter files and final code for all sections and projects of the course, **exactly as shown in the videos**.
 
