@@ -56,3 +56,10 @@ checkIn(flight, jonas);
 // primitive types are passed by value, meaning that a copy of the value is created and passed to the function.
 // objects are passed by reference, meaning that a reference to the object is passed to the function, allowing the function to modify the original object.
 // JS does not have pass by reference, but it has pass by value for objects, which means that the reference to the object is passed by value.
+
+
+// 137 First class and higher-order functions
+
+// functions are values in JS, meaning that they can be stored in variables, passed as arguments to other functions, and returned from functions. This is because functions are objects in JS.
+
+// high order functions are functions that receive other functions as arguments, return functions, or both. They are a powerful tool for creating abstractions and building reusable code. Examples of higher-order functions include map, filter, and reduce.
