@@ -102,3 +102,87 @@ document.body.addEventListener('click', high5);
 // high order functions are functions that receive other functions as arguments, return functions, or both. They are a powerful tool for creating abstractions and building reusable code. Examples of higher-order functions include map, filter, and reduce.
 
 // Callback functions are functions that are passed as arguments to other functions and are executed after some kind of event or action has occurred. They are a powerful tool for creating abstractions and building reusable code. Examples of callback functions include event listeners and array methods like map, filter, and reduce.
+
+
+//139. Functions Returning Functions
+
+// closure is a feature in JS that allows a function to access variables from its outer scope even after the outer function has returned. This is because functions in JS are first-class citizens and can be treated like any other value, including being passed as arguments to other functions and returned from functions. This allows for powerful abstractions and reusable code.
+
+
+const greet = function (greeting) {
+  console.log('1 outer func greet', greeting);
+  console.log('2 outer func greet', name);
+
+  return function (name) {
+    console.log('3 inner function name', greeting);
+    console.log('4. inner function name', name);
+    console.log(`${greeting} ${name}`);
+  }
+}
+
+// const greeterHey = greet('Hey');
+// greeterHey('Jonas');
+// greeterHey('Steven');
+
+
+greet('Hello')('Libby');
+
+// // arrow function
+const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
+greetArrow('Hi')('Jonas');
+
+
+
+// 140. The call and apply Methods
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  // book: function (flightNum, name) {
+  //   console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+  //   this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  // },
+  book(flightNum, name) {
+    console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+// enhanced object literal syntax allows us to define methods in objects without the function keyword. The book method is defined using the shorthand syntax, which is equivalent to defining it as a function expression.
+
+lufthansa.book(239, 'Jonas Schmedtmann');
+lufthansa.book(635, 'John Smith');
+console.log(lufthansa);
+
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const book = lufthansa.book;
+
+// Does NOT work
+// book(23, 'Sarah Williams');
+
+// Call method allows us to call a function with a specific this value and arguments provided individually. The first argument is the value of this, and the remaining arguments are the arguments for the function.
+
+// book(23, 'Sarah Williams'); // this will be undefined because the book function is called without a context
+book.call(eurowings, 23, 'Sarah Williams'); // first argument is the value of this, and the remaining arguments are the arguments for the function
+console.log(eurowings);
+
+book.call(lufthansa, 239, 'Mary Cooper');
+console.log(lufthansa);
+
+
+// Apply method is similar to call method, but it takes an array of arguments instead of individual arguments. The first argument is the value of this, and the second argument is an array of arguments for the function.
+const flightData = [583, 'George Cooper'];
+book.apply(eurowings, flightData);
+console.log(eurowings);
+
+// The apply method is not used much in modern JS, because we can use the spread operator to pass an array of arguments to a function. The spread operator allows us to expand an array into individual elements, which can be passed as arguments to a function. This is more concise and readable than using the apply method.
+
+book.call(eurowings, ...flightData);
+console.log(eurowings);
