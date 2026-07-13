@@ -133,7 +133,7 @@
 
 
 
-// 140. The call and apply Methods
+// ##########.  140. The call and apply Methods. ##########
 
 // const lufthansa = {
 //   airline: 'Lufthansa',
@@ -188,7 +188,7 @@
 // console.log(eurowings);
 
 
-// // 141. The bind Method
+// ##########  141. The bind Method. ##########
 
 // // Bind method allows us to create a new function with a specific this value and arguments provided individually. The first argument is the value of this, and the remaining arguments are the arguments for the function. The bind method does not call the function immediately, but instead returns a new function that can be called later.
 
@@ -279,7 +279,7 @@
 // console.log(addVAT2(23));
 
 
-// 142. CHALLENGE #1
+//##########.   142. CHALLENGE #1 ##########
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -362,34 +362,95 @@ GOOD LUCK 😀
 
 
 
-const poll = {
-  question: 'What is your favourite programming language?',
-  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
-  // This generates [0, 0, 0, 0]. More in the next section!
-  answers: new Array(4).fill(0),
-  registerNewAnswer() {
-    // answer
-    let answer = Number(prompt(
-      `${this.question}\n${this.options.join('\n')}\n(Write option number)`
-    ));
+// const poll = {
+//   question: 'What is your favourite programming language?',
+//   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+//   // This generates [0, 0, 0, 0]. More in the next section!
+//   answers: new Array(4).fill(0),
+//   registerNewAnswer() {
+//     // answer
+//     let answer = Number(prompt(
+//       `${this.question}\n${this.options.join('\n')}\n(Write option number)`
+//     ));
 
-    // check if number
-    typeof answer === 'number' && answer < this.answers.length && this.answers[answer]++
+//     // check if number
+//     typeof answer === 'number' && answer < this.answers.length && this.answers[answer]++
 
-    this.displayResults();
-    this.displayResults('string');
-  },
-  displayResults(type = 'array') {
-    if (type === 'array') {
-      console.log(this.answers);
-    } else if (type === 'string') {
-      console.log(`Poll results are ${this.answers.join(', ')}`);
-    }
+//     this.displayResults();
+//     this.displayResults('string');
+//   },
+//   displayResults(type = 'array') {
+//     if (type === 'array') {
+//       console.log(this.answers);
+//     } else if (type === 'string') {
+//       console.log(`Poll results are ${this.answers.join(', ')}`);
+//     }
+//   }
+// };
+
+
+// document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+// poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+// poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+
+
+
+// ########## 143. Immediately Invoked Function Expressions (IIFE) #############
+
+
+// const runOnce = function () {
+//   console.log('wrong This will never run again');
+// };
+// runOnce();
+// runOnce();
+
+// IIFE
+// make it a function expression by wrapping it in parentheses, then call it immediately with another set of parentheses.
+// This is useful for creating a new scope and avoiding polluting the global scope with variables and functions. It is also useful for creating private variables and functions that cannot be accessed from outside the IIFE.
+
+// (function () {
+//   console.log('This will never run again');
+//   const isPrivate = 23;
+// })();
+
+// console.log(isPrivate); // ReferenceError: isPrivate is not defined
+
+// (() => console.log('This will ALSO never run again'))();
+
+// {
+//   const isPrivate = 23;
+//   var notPrivate = 46;
+// }
+
+// // console.log(isPrivate); // ReferenceError: isPrivate is not defined
+// console.log(notPrivate); // 46
+
+
+// ########## 144. Closures #############
+
+// A closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function's variables — a scope chain. The closure has three scope chains: it has access to its own scope (variables defined between its curly brackets), it has access to the outer function's variables, and it has access to the global variables.
+
+// A closure is created when a function is defined inside another function, and the inner function references variables from the outer function. The inner function "closes over" the variables from the outer function, allowing it to access them even after the outer function has finished executing.
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  // returns a new function that has access to the passengerCount variable from the outer function's scope. This is a closure.
+  // e.g. booker function has access to the passengerCount variable even after the secureBooking function has finished executing.
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
   }
-};
+}
+
+const booker = secureBooking();
+// booker();
+// booker();
+// booker();
 
 
-document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll));
+// We do not need to create closures manually, they are created automatically whenever a function is created. A closure is created when a function is defined inside another function, and the inner function references variables from the outer function. The inner function "closes over" the variables from the outer function, allowing it to access them even after the outer function has finished executing.
 
-poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
-poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+
+console.dir(booker); // shows the closure in the console, which contains the passengerCount variable and its value. The closure is created when the booker function is created, and it has access to the passengerCount variable from the secureBooking function's scope.
