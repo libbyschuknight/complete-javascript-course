@@ -433,24 +433,93 @@ GOOD LUCK 😀
 
 // A closure is created when a function is defined inside another function, and the inner function references variables from the outer function. The inner function "closes over" the variables from the outer function, allowing it to access them even after the outer function has finished executing.
 
-const secureBooking = function () {
-  let passengerCount = 0;
+// const secureBooking = function () {
+//   let passengerCount = 0;
 
-  // returns a new function that has access to the passengerCount variable from the outer function's scope. This is a closure.
-  // e.g. booker function has access to the passengerCount variable even after the secureBooking function has finished executing.
-  return function () {
-    passengerCount++;
-    console.log(`${passengerCount} passengers`);
+//   // returns a new function that has access to the passengerCount variable from the outer function's scope. This is a closure.
+//   // e.g. booker function has access to the passengerCount variable even after the secureBooking function has finished executing.
+//   return function () {
+//     passengerCount++;
+//     console.log(`${passengerCount} passengers`);
+//   }
+// }
+
+// const booker = secureBooking();
+// // booker();
+// // booker();
+// // booker();
+
+
+// // We do not need to create closures manually, they are created automatically whenever a function is created. A closure is created when a function is defined inside another function, and the inner function references variables from the outer function. The inner function "closes over" the variables from the outer function, allowing it to access them even after the outer function has finished executing.
+
+
+// console.dir(booker); // shows the closure in the console, which contains the passengerCount variable and its value. The closure is created when the booker function is created, and it has access to the passengerCount variable from the secureBooking function's scope.
+
+
+// ######
+
+// Example 1
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
   }
 }
 
-const booker = secureBooking();
-// booker();
-// booker();
-// booker();
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  }
+}
+
+// g();
+// f(); // 46
+
+// // Re-assigning f function
+// h();
+// f(); // 1554
+
+// console.dir(f); // shows the closure in the console, which contains the b variable and its value. The closure is created when the f function is created, and it has access to the b variable from the h function's scope.
 
 
-// We do not need to create closures manually, they are created automatically whenever a function is created. A closure is created when a function is defined inside another function, and the inner function references variables from the outer function. The inner function "closes over" the variables from the outer function, allowing it to access them even after the outer function has finished executing.
+// Example 2
+const boardPassengers = function (number, wait) {
+  const perGroup = number / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${number} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+}
+
+const perGroup = 1000; // this variable is in the global scope, and is not used in the boardPassengers function. The boardPassengers function has its own perGroup variable, which is created when the function is called. The closure created by the setTimeout function has access to the perGroup variable from the boardPassengers function's scope, not the global scope.
 
 
-console.dir(booker); // shows the closure in the console, which contains the passengerCount variable and its value. The closure is created when the booker function is created, and it has access to the passengerCount variable from the secureBooking function's scope.
+// boardPassengers(180, 3);
+
+
+
+
+// #### 146. CHALLENGE #2 ######
+
+
+// event listern for any click and set to blie
+(function (){
+  const header = document.querySelector('h1');
+  header.style.color = 'red'
+
+  // mine
+  // document.body.addEventListener('click', () =>
+  //     header.style.color = 'blue'
+  // )
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue'
+  })
+
+})();
