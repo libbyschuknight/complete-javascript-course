@@ -71,7 +71,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -108,15 +108,48 @@ let arr = ['a', 'b', 'c', 'd', 'e'];
 // console.log(letters.join(' - '));
 
 
-const arr3 = [23, 11, 64];
-console.log(arr3[0]);
-console.log(arr3.at(0));
+// const arr3 = [23, 11, 64];
+// console.log(arr3[0]);
+// console.log(arr3.at(0));
 
-// Getting the last array element
-console.log(arr3[arr3.length - 1]);
-console.log(arr3.slice(-1)[0]);
-console.log(arr3.at(-1));
+// // Getting the last array element
+// console.log(arr3[arr3.length - 1]);
+// console.log(arr3.slice(-1)[0]);
+// console.log(arr3.at(-1));
 
-// works on strings too
-console.log('jonas'.at(0));
-console.log('jonas'.at(-1));
+// // works on strings too
+// console.log('jonas'.at(0));
+// console.log('jonas'.at(-1));
+
+
+
+// 151. Looping arrays: forEach
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+console.log('--- FOREACH ---');
+
+movements.forEach(function (movement, index, array) {
+  if (movement > 0) {
+    console.log(`Movement ${index + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+});
+
+// 0: function(200)
+// 1: function(450)
+// 2: function(400)
+// ...
+
+// can't not break out of a forEach loop, you can only break out of a for loop or a while loop
+
+// forEach with Maps and Sets
